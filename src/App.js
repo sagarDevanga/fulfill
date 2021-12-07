@@ -14,29 +14,33 @@ function App() {
 
   const selectAll = (e) => {
 
-    const newData = data.map(d => ({ ...d, checked: e.target.checked }))
+    const newData = displayData.map(d => ({ ...d, checked: e.target.checked }))
     setallChecked(e.target.checked)
-    setdata(newData)
+    setdisplayData(newData)
   }
 
   const handleChange = (e, selectedData) => {
 
-    const newData = data.map(d => {
+    const newData = displayData.map(d => {
       if (d.id == selectedData.id) {
         return { ...d, checked: e.target.checked }
       }
       return d
     })
 
-    setdata(newData)
+    setdisplayData(newData)
     setallChecked(false)
   }
 
   function getMoreData() {
 
     //get more batch of data
-    const d = data.slice((pageNumber.current * 50), (2 * pageNumber.current * 50))
-    const h = displayData.concat(d)
+    let d = data.slice((pageNumber.current * 50), (2 * pageNumber.current * 50))
+    debugger
+    if (allChecked) {
+      d = d.map(o => ({ ...o, checked: true }))
+    }
+    let h = displayData.concat(d)
     pageNumber.current += 1
 
     setdisplayData(h)
